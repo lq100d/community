@@ -8,7 +8,7 @@
 - [Ordering pizza - handlers](#handlers)
 - [Ordering pizza - optional slots](#optional-slots)
 - [Ordering pizza - free-form input](#free-form-input)
-- [Ordering pizza - FAQ](#FAQ)
+- [Ordering pizza - FAQ](#faq)
 - [Booking travel - overlapping entities](#overlapping-entities)
 
 
@@ -153,7 +153,7 @@ Slots variable can be a simple type of an array.
 - No prompt to user: Users are not asked for the value of the slot. If the users don't fill in the slot, there is no reminder.
 - Prompt can be filled: Users can provide the value of the optional slot at any moment of processing the node with slots. The value is then populated:
 
-    ```     
+    ```
     User: "I want to order a margherita pizza to go" / @pizza_place:go
     ```
 
@@ -186,10 +186,10 @@ Basic question answering (e.g. FAQ) is a simple mapping of inputs (questions) to
 In more advanced cases, however, this is not sufficient. To provide  an answer, one needs to collect one or more parameters 
      
     ```
-    User: "What is your delivery time?"
-    Bot: "Where do you want to deliver it to? We deliver to Manhattan, Bronx and Brooklyn." 
-    User: "Bronx"             
-    Bot: "Delivery time to Bronx is 30 minutes" 
+	User: "What is your delivery time?"
+	Bot: "Where do you want to deliver it to? We deliver to Manhattan, Bronx and Brooklyn." 
+	User: "Bronx"             
+	Bot: "Delivery time to Bronx is 30 minutes" 
     ```
  
 __Features demonstrated__
@@ -202,13 +202,13 @@ __Features demonstrated__
 
 [ordering-pizza-entity](pizza_entity.json) is an example demonstrating how the overlapping entities are processed during slot value resolution. The example is derived from pizza_basic.json, two extra slots are added. The first one is collecting a numerical value representing number of pizzas, the second is collecting the date when the pizza shold be delivered. When entering the phrase:
    
-    ```     
+    ```
 	User: "I want to order two large pizza margherita for August 5"
     ```
 
 recognized entities are 
 
-    ```     
+    ```
 	@sys-number:2
 	@pizza_size:large
 	@pizza_type:margherita
@@ -230,7 +230,7 @@ Mind that there are two @sys-number values. The first one is number of pizzas an
 
 - User provides information after the prompts:
 
-    ```     
+    ```
 	User: "Book travel ticket"
 	Bot: "Where do you want to travel from?"
 	User: "From Prague"
@@ -243,7 +243,7 @@ Mind that there are two @sys-number values. The first one is number of pizzas an
 
 - It gets more tricky if slots are filled by the two entities of the same type. The system has no contextual information, so it will use only the first entity with the information provided. The first slot will be filled and the second slot will be prompted. For example:
 
-    ```     
+    ```
 	User: "Book travel ticket"
 	Bot: "Where do you want to travel from?"
 	User: "From Prague to London tomorrow"
