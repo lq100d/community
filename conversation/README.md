@@ -169,45 +169,44 @@ Slots variable can be a simple type of an array.
 
 - Different slot condition: Setting slot value with a non entity. For example, setting "Check for" value in slot as `!#order&&!@pizza_size&&!@pizza_type`.
 
-Additional information:
+#### Additional information
 
 - When collecting any input, this can be input.text (or even true as input.text is always true). The problem is that input.text accepts any input, even the phrase that is used for entering the node with slots e.g. "I want to order pizza". It would match the free-form slot and user would not be ever asked for an address.  We can partially avoid the problem by excluding sentences that match the other slots.
 - Assign a value to the context variable represented by the slot (pizza_address). Assignment is typically done automatically (as the value of entity is assigned to slot variable by default). In this case, you must assign it manually by going to the three dot menu next to **Save it as** and by replacing `"!#order&&!@pizza_size&&!@pizza_type` with `<?input.text?>`.
 - Any change in a slot's "Check for" input line will override this change, so remember to change it back. This is just a partial solution to the problem. If you enter input for other slots with a spelling mistake, it is not accepted by the slot but is happily taken by our greedy input.text slot. The user will then not be asked for the value of address any more, which is bad behavior. Depending on the input, you might set a condition on the free-form slot on an entity to detect the type of input.
 - The more reliable way so far for collecting free-form input is to use data collection without using the node with slots. But this will probably change soon.
 
+
 ### FAQ
 
-__Description__
+#### Description
 
 [Ordering pizza - FAQ](pizza_faq.json) is an example of using a node with slots for advenced FAQ.
-Basic question answering (e.g. FAQ) is a simple mapping of inputs (questions) to outputs (answers).It is implemented by a sequence of nodes triggered by intents representing questions.
-
+Basic question answering (e.g. FAQ) is a simple mapping of inputs (questions) to outputs (answers).It is implemented by a sequence of nodes triggered by intents representing questions. 
 In more advanced cases, however, this is not sufficient. To provide  an answer, one needs to collect one or more parameters 
-     
+ 
+#### Features demonstrated
+
+- Using a node with slots for advenced FAQ.
+
     ```
 	User: "What is your delivery time?"
 	Bot: "Where do you want to deliver it to? We deliver to Manhattan, Bronx and Brooklyn." 
 	User: "Bronx"             
 	Bot: "Delivery time to Bronx is 30 minutes" 
     ```
- 
-__Features demonstrated__
 
-- Using a node with slots for advenced FAQ.
 
 ### Ordering pizza - overlapping entities
 
 #### Description
 
-[ordering-pizza-entity](pizza_entity.json) is an example demonstrating how the overlapping entities are processed during slot value resolution. The example is derived from pizza_basic.json, two extra slots are added. The first one is collecting a numerical value representing number of pizzas, the second is collecting the date when the pizza shold be delivered. When entering the phrase:
-   
+[ordering-pizza-entity](pizza_entity.json) is an example demonstrating how the overlapping entities are processed during slot value resolution. The example is derived from pizza_basic.json, two extra slots are added. The first one is collecting a numerical value representing number of pizzas, the second is collecting the date when the pizza shold be delivered. When entering the phrase:  
     ```
-	User: "I want to order two large pizza margherita for August 5"
+	User: "I want to order two large pizza margherita for August 5"`
     ```
 
 recognized entities are 
-
     ```
 	@sys-number:2
 	@pizza_size:large
