@@ -14,7 +14,7 @@
 
 ## Ordering pizza
 
-### Basic example <a id="ordering-pizza-basic"></a>
+### Basic example
 
 #### Description
 
@@ -76,7 +76,7 @@ Implement these features by customizing at them the slot level.
 
 #### Description
 
-[Ordering pizza - multiple values](pizza-toppings-basic.json) is a basic example of using slots with multiple values. The user can provide an arbitrary number of toppings.
+[Ordering pizza - multiple values](pizza-topping-basic.json) is a basic example of using slots with multiple values. The user can provide an arbitrary number of toppings.
 
 #### Features demonstrated
 
@@ -123,7 +123,7 @@ Slots variable can be a simple type of an array.
 
 #### Description
 
-[Ordering pizza - handlers](pizza-handler.json) demonstrates how general (node) slot handlers can be used if a user's input are not specific to a particular slot or do not provide a value for any other slots. The general slot handlers check if the slot conditions and match handlers are not triggered. If none of the general slot handlers match, the specific slot "No match" handler is checked. The handlers can be found under "Manage handler." The example is derived from `pizza_confirm.json`.
+[Ordering pizza - handlers](pizza-handlers.json) demonstrates how general (node) slot handlers can be used if a user's input are not specific to a particular slot or do not provide a value for any other slots. The general slot handlers check if the slot conditions and match handlers are not triggered. If none of the general slot handlers match, the specific slot "No match" handler is checked. The handlers can be found under "Manage handler." The example is derived from `pizza_confirm.json`.
 
 #### Features demonstrated
 
@@ -133,7 +133,7 @@ Slots variable can be a simple type of an array.
     - Example: #reset_frame (setting all the slot values to null).
 - Specific slot "Match" handlers and slot conditions are checked with precedence: If an entity triggers, corresponding to pizza_confirm, the general slot level handler #exit does not match. This trigger might be a problem when you use the same wording for the condition pizza_confirm slot and for the general slot level #exit. To avoid this, use the general slot handler entirely to exit prematurely from the node and don't provide the option for pizza_confirm.
 
-### Optional slots <a id="ordering-pizza-optional-slots"></a>
+### Optional slots
 
 #### Description
 
@@ -155,7 +155,7 @@ Slots variable can be a simple type of an array.
 
 #### Description
 
-[Ordering pizza - free-form input](pizza-take-what-you-get.json) is an example that adds a slot to collect the pizza delivery address to `pizza-basic.json`. The address is accepted without any restriction for format of the input.
+[Ordering pizza - free-form input](pizza-free-form.json) is an example that adds a slot to collect the pizza delivery address to `pizza-basic.json`. The address is accepted without any restriction for format of the input.
 
 #### Features demonstrated
 
@@ -168,11 +168,11 @@ Additional information:
 - Any change in a slot's "Check for" input line will override this change, so remember to change it back. This is just a partial solution to the problem. If you enter input for other slots with a spelling mistake, it is not accepted by the slot but is happily taken by our greedy input.text slot. The user will then not be asked for the value of address any more, which is bad behavior. Depending on the input, you might set a condition on the free-form slot on an entity to detect the type of input.
 - The more reliable way so far for collecting free-form input is to use data collection without using the node with slots. But this will probably change soon.
 
-### FAQ <a id="ordering-pizza-FAQ"></a>
+### FAQ
 
 __Description__
 
-[Ordering pizza - FAQ](Pizza_FAQ.json) is an example of using a node with slots for advenced FAQ.
+[Ordering pizza - FAQ](pizza_faq.json) is an example of using a node with slots for advenced FAQ.
 Basic question answering (e.g. FAQ) is a simple mapping of inputs (questions) to outputs (answers).It is implemented by a sequence of nodes triggered by intents representing questions.
 
 In more advanced cases, however, this is not sufficient. To provide  an answer, one needs to collect one or more parameters 
@@ -186,9 +186,27 @@ __Features demonstrated__
 
 - Using a node with slots for advenced FAQ.
 
+### Ordering pizza - overlapping entities
+
+#### Description
+
+[ordering-pizza-entity](pizza_entity.json) is an example demonstrating how the overlapping entities are processed during slot value resolution. The example is derived from pizza_basic.json, two extra slots are added. The first one is collecting a numerical value representing number of pizzas, the second is collecting the date when the pizza shold be delivered. When entering the phrase:
+   
+	User: "I want to order two large pizza margherita for August 5"
+
+recognized entities are 
+
+	@sys-number:2
+	@pizza_size:large
+	@pizza_type:margherita
+	@sys-date:2017-08-05
+	@sys-number:5
+
+Mind that there are two @sys-number values. The first one is number of pizzas and the secon one is part of the date recognized as a number. The second @sys-number is  overlapped with detected date @sys-date. The slot execution algorithm takes into account the fact of overlapping entities and disregards the smaller one (in this case @sys-number:5). Therefore, the assignment of the values is correct though there wold be a disambiguation problem without this feature.
+
 ## Booking Travel
 
-### Overlapping entities <a id="booking-travel-overlapping-entities"></a>
+### Overlapping entities
 
 #### Description
 
@@ -221,38 +239,3 @@ __Features demonstrated__
 - If two entities of different types are detected, they are processed correctly (in the previous example travel_date and travel_from).
 - The same problem exists when two slots are filled by entities that have overlapping values.
 
-### Ordering pizza - FAQ <a id="ordering-pizza-FAQ"></a>
-
-#### Description
-
-[Ordering pizza - FAQ](Pizza_FAQ.json) is an example of using a node with slots for advenced FAQ.
-Basic question answering (e.g. FAQ) is a simple mapping of inputs (questions) to outputs (answers).It is implemented by a sequence of nodes triggered by intents representing questions.
-
-In more advanced cases, however, this is not sufficient. To provide  an answer, one needs to collect one or more parameters 
-   
-	User: "What is your delivery time?"
-	Bot: "Were do you want to deliver it to? We deliver to Manhattan, Bronx and Brooklyn." 
-	User: "Bronx"
-	Bot: "Delivery time to Bronx is 30 minutes" 
-
-#### Features demonstrated
-
-using a noded with slots for advenced FAQ.
-
-### Ordering pizza - overlapping entities <a id="ordering-pizza-entity"></a>
-
-#### Description
-
-[ordering-pizza-entity](pizza_entity.json) is an example demonstrating how the overlapping entities are processed during slot value resolution. The example is derived from pizza_basic.json, two extra slots are added. The first one is collecting a numerical value representing number of pizzas, the second is collecting the date when the pizza shold be delivered. When entering the phrase:
-   
-	User: "I want to order two large pizza margherita for August 5"
-
-recognized entities are 
-
-	@sys-number:2
-	@pizza_size:large
-	@pizza_type:margherita
-	@sys-date:2017-08-05
-	@sys-number:5
-
-Mind that there are two @sys-number values. The first one is number of pizzas and the secon one is part of the date recognized as a number. The second @sys-number is  overlapped with detected date @sys-date. The slot execution algorithm takes into account the fact of overlapping entities and disregards the smaller one (in this case @sys-number:5). Therefore, the assignment of the values is correct though there wold be a disambiguation problem without this feature.
